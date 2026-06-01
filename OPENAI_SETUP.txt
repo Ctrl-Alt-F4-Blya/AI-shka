@@ -1,0 +1,10 @@
+OPENAI API SETUP
+
+1. Open OPENAI_API_KEY.txt.
+2. Replace PASTE_YOUR_OPENAI_API_KEY_HERE with your OpenAI API key.
+3. Save the file.
+4. Run START.cmd.
+5. In the site engine selector choose Local + OpenAI API or OpenAI API only.
+
+The app first tries Responses API, then automatically tries Chat Completions API if needed.
+The answer field will show the API error if the key/model/quota is wrong.

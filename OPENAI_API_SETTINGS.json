@@ -1,0 +1,7 @@
+{
+  "model": "gpt-4o-mini",
+  "fallback_models": ["gpt-4.1-mini"],
+  "timeout_seconds": 90,
+  "detail": "high",
+  "max_output_tokens": 900
+}

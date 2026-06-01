@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-shka</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="heroText">
+        <span class="badge">Локальный помощник для чтения изображений</span>
+        <h1>AI-shka</h1>
+        <p>Распознавание текста, ссылок, цифр и отдельных строк с картинок, скриншотов и фотографий. Работает локально на компьютере: пока открыт терминал — сайт включён. Для усиления можно установить EasyOCR/Tesseract или подключить OpenAI API.</p>
+      </div>
+      <div class="status" id="statusBox">Проверка движка...</div>
+    </section>
+
+    <section class="workspace">
+      <section class="card inputCard">
+        <div class="cardTop">
+          <h2>Изображение</h2>
+          <div class="actions">
+            <button class="secondary" id="pasteBtn">Вставить из буфера</button>
+            <button class="secondary" id="openBtn">Открыть файл</button>
+            <button class="primary" id="recognizeBtn">Распознать</button>
+          </div>
+        </div>
+        <input id="fileInput" type="file" accept="image/*" hidden>
+
+        <div class="dropZone" id="dropZone">
+          <canvas id="canvas"></canvas>
+          <div class="emptyHint" id="emptyHint">
+            <strong>Перетащи картинку сюда</strong>
+            <span>или нажми «Открыть файл». Также можно вставить скриншот через Ctrl+V.</span>
+          </div>
+        </div>
+
+        <div class="sliders">
+          <label>Масштаб <input id="zoom" type="range" min="100" max="900" value="280"></label>
+          <label>Контраст <input id="contrast" type="range" min="50" max="260" value="130"></label>
+          <label>Яркость <input id="brightness" type="range" min="50" max="200" value="100"></label>
+          <label class="check"><input id="gray" type="checkbox" checked> Ч/Б</label>
+          <label class="check"><input id="invert" type="checkbox"> Инверсия</label>
+        </div>
+
+        <div class="settings">
+          <label>Язык
+            <select id="language">
+              <option value="rus+eng">Русский + English</option>
+              <option value="eng">English</option>
+              <option value="rus">Русский</option>
+            </select>
+          </label>
+          <label>Режим
+            <select id="mode">
+              <option value="auto">Обычный текст</option>
+              <option value="messy">Сложная строка</option>
+              <option value="links">Ссылки и адреса</option>
+              <option value="handwriting">Рукописный текст beta</option>
+              <option value="numbers">Номера, коды и короткие записи</option>
+            </select>
+          </label>
+          <label>Движок
+            <select id="engine">
+              <option value="local">Сильный локальный</option>
+              <option value="combined">Локально + OpenAI API</option>
+              <option value="openai">OpenAI API с локальным fallback</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <aside class="card resultCard">
+        <h2>Результат</h2>
+        <textarea id="resultText" placeholder="Здесь появится распознанный текст"></textarea>
+        <div class="confidenceLine">
+          <span>Уверенность</span>
+          <strong id="confidenceValue">0%</strong>
+        </div>
+        <div class="bar"><span id="confidenceBar"></span></div>
+        <div class="buttonGrid">
+          <button class="primary" id="copyTextBtn">Скопировать текст</button>
+          <button class="secondary" id="speakBtn">Озвучить</button>
+        </div>
+
+        <div class="linksBox" id="linksBox" hidden>
+          <h3>Найденные ссылки</h3>
+          <div id="linksList"></div>
+          <button class="secondary wide" id="copyLinksBtn">Скопировать ссылки</button>
+        </div>
+
+        <details class="alternatives">
+          <summary>Другие варианты распознавания</summary>
+          <div id="alternativesList"></div>
+        </details>
+        <div class="note" id="note">Загрузи изображение и нажми «Распознать».</div>
+      </aside>
+    </section>
+
+    <section class="card tips">
+      <h2>Подсказки для лучшего результата</h2>
+      <div class="tipsGrid">
+        <div><b>1</b><span>Обрежь лишнее вокруг текста.</span></div>
+        <div><b>2</b><span>Для коротких кривых строк включай режим «Сложная строка».</span></div>
+        <div><b>3</b><span>Для URL и e-mail выбирай режим «Ссылки и адреса».</span></div>
+        <div><b>4</b><span>Для сложных фото включи «Локально + OpenAI API». Если API недоступен, программа оставит локальный результат.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
